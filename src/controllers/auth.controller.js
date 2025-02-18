@@ -60,8 +60,5 @@ export const profile = async (req, res) => {
 
   if (!userFound) return res.status(400).json({ message: "user not found" });
 
-  return res.json({
-    username: userFound.username,
-    email: userFound.email,
-  });
+  return res.json(userFound.toJSON());
 };
