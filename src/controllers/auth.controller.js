@@ -5,6 +5,11 @@ import { createAccesToken } from "../libs/jwt.js";
 export const register = async (req, res) => {
   const { email, password, username } = req.body;
   try {
+    const userFound = await User.findOne({ email });
+
+    if (userFound)
+      return res.status(400).json({ error: ["the email alredy exist"] });
+
     const passwordHash = await bcrypt.hash(password, 10);
 
     const newUser = new User({
@@ -17,12 +22,9 @@ export const register = async (req, res) => {
     const token = await createAccesToken({ id: userSaved._id });
 
     res.cookie("token", token);
-    res.json({
-      message: "user created",
-      username: userSaved.username,
-    });
+    res.json(userSaved.toJSON());
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -31,22 +33,19 @@ export const login = async (req, res) => {
   try {
     const userFound = await User.findOne({ email });
 
-    if (!userFound) return res.status(400).json({ message: "user not found" });
+    if (!userFound) return res.status(400).json({ error: ["user not found"] });
 
     const isMatch = await bcrypt.compare(password, userFound.password);
 
     if (!isMatch)
-      return res.status(400).json({ message: "Incorrect password" });
+      return res.status(400).json({ error: ["Incorrect password"] });
 
     const token = await createAccesToken({ id: userFound._id });
 
     res.cookie("token", token);
-    res.json({
-      message: "Log in succefully",
-      username: userFound.username,
-    });
+    res.json(userFound.toJSON());
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -58,7 +57,7 @@ export const logout = async (req, res) => {
 export const profile = async (req, res) => {
   const userFound = await User.findById(req.user.id);
 
-  if (!userFound) return res.status(400).json({ message: "user not found" });
+  if (!userFound) return res.status(400).json({ error: ["user not found"] });
 
   return res.json(userFound.toJSON());
 };
