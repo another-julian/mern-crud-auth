@@ -1,13 +1,26 @@
 import { useForm } from "react-hook-form";
-import { registerRequest } from "../api/auth";
+import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 function Register() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { signup, isAuth } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuth) navigate("/tasks");
+  }, [isAuth]);
+
+  console.log(errors);
 
   const onSubmit = handleSubmit(async (values) => {
     console.log(values);
-    const res = await registerRequest(values);
-    console.log(res);
+    signup(values);
   });
 
   return (
@@ -30,6 +43,11 @@ function Register() {
             placeholder="e.g: another"
             {...register("username", { required: true })}
           />
+          {errors.username && (
+            <p className="text-red-500 text-xs italic">
+              You Forgot put a user name!! 😨.
+            </p>
+          )}
         </div>
         <div className="mb-4">
           <label
@@ -41,10 +59,15 @@ function Register() {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
-            type="text"
+            type="email"
             placeholder="e.g: another"
             {...register("email", { required: true })}
           />
+          {errors.email && (
+            <p className="text-red-500 text-xs italic">
+              Something wrong with this email! 🤔.
+            </p>
+          )}
         </div>
         <div className="mb-6">
           <label
@@ -60,6 +83,11 @@ function Register() {
             placeholder="******************"
             {...register("password", { required: true })}
           />
+          {errors.password && (
+            <p className="text-red-500 text-xs italic">
+              Please choose a good password, min 8 characters 😁.
+            </p>
+          )}
         </div>
         <div className="mb-6">
           <button
