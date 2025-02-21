@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 
 function Login() {
   const [showErrors, setShowErrors] = useState({
@@ -21,7 +21,7 @@ function Login() {
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    //console.log(data);
     login(data);
   });
 
@@ -45,12 +45,14 @@ function Login() {
 
   useEffect(() => {
     if (isAuth) navigate("/tasks");
-    setShowErrors({
-      all: loginErrors ? true : false,
-      email: loginErrors.some((error) => error.includes("email")),
-      password: loginErrors.some((error) => error.includes("password")),
-    });
-  }, [loginErrors, isAuth]);
+    else {
+      setShowErrors({
+        all: loginErrors ? true : false,
+        email: loginErrors.some((error) => error.includes("email")),
+        password: loginErrors.some((error) => error.includes("password")),
+      });
+    }
+  }, [isAuth, loginErrors]);
 
   return (
     <div className="w-full max-w-96">
@@ -59,16 +61,14 @@ function Login() {
         onSubmit={onSubmit}
         className="bg-white shadow-md rounded-lg px-10 py-10 mb-4 flex-col align-middle justify-center"
       >
-        <div>
-          <div aria-live="polite">
-            {showErrors.all
-              ? loginErrors.map((error, index) => (
-                  <p key={index} className="mb-4 bg-red-500 p-2 text-white">
-                    {error}
-                  </p>
-                ))
-              : null}
-          </div>
+        <div aria-live="polite">
+          {showErrors.all
+            ? loginErrors.map((error, index) => (
+                <p key={index} className="mb-4 bg-red-500 p-2 text-white">
+                  {error}
+                </p>
+              ))
+            : null}
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -91,7 +91,7 @@ function Login() {
             </p>
           ) : null}
         </div>
-        <div className="mb-6">
+        <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Password
             <input
@@ -111,13 +111,24 @@ function Login() {
             </p>
           ) : null}
         </div>
-        <div className="">
+        <div className="mb-4">
           <button
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer w-full"
             type="submit"
           >
             Login
           </button>
+        </div>
+        <div className="mb-4">
+          <p>
+            Don't you hava an account?{" "}
+            <Link
+              className="hover:underline text-blue-600 font-bold"
+              to="/register"
+            >
+              Sing up here
+            </Link>
+          </p>
         </div>
       </form>
     </div>
