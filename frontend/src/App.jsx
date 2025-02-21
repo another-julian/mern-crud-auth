@@ -3,6 +3,9 @@ import { AuthProvider } from "./context/AuthContext";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import Tasks from "./pages/Tasks";
+import AddTask from "./pages/Tasks/AddTask";
+import UpdateTask from "./pages/Tasks/UpdateTask";
 
 function App() {
   return (
@@ -12,8 +15,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<h1>Profile</h1>} />
-          <Route path="/tasks" element={<h1>Tasks Route</h1>} />
+          <Route path="/tasks" element={<Tasks />} />
+          <Route path="/tasks/:id" elemenet={<Task />} />
+          <Route path="/add-task" element={<AddTask />} />
+          <Route path="/update-task/:id" element={<UpdateTask />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
