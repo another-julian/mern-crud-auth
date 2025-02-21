@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-body {
-  background-color: rgb(231, 231, 231);
-}
 div#root {
   height: 100vh;
   display: flex;

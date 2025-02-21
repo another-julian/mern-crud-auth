@@ -4,8 +4,11 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Tasks from "./pages/Tasks";
-import AddTask from "./pages/Tasks/AddTask";
-import UpdateTask from "./pages/Tasks/UpdateTask";
+import AddTask from "./pages/tasks_pages/AddTask";
+import UpdateTask from "./pages/tasks_pages/UpdateTask";
+import Task from "./pages/tasks_pages/Task";
+import ProtectedRoute from "./ProtectedRoute";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -15,10 +18,13 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/tasks" element={<Tasks />} />
-          <Route path="/tasks/:id" elemenet={<Task />} />
-          <Route path="/add-task" element={<AddTask />} />
-          <Route path="/update-task/:id" element={<UpdateTask />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/tasks/:id" element={<Task />} />
+            <Route path="/add-task" element={<AddTask />} />
+            <Route path="/update-task/:id" element={<UpdateTask />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

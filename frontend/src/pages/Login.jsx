@@ -59,7 +59,7 @@ function Login() {
       <h2 className="mb-10 text-[1.5rem] text-center font-bold">Login Form</h2>
       <form
         onSubmit={onSubmit}
-        className="bg-white shadow-md rounded-lg px-10 py-10 mb-4 flex-col align-middle justify-center"
+        className="bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-50  shadow-md rounded-lg px-10 py-10 mb-4 flex-col align-middle justify-center"
       >
         <div aria-live="polite">
           {showErrors.all
@@ -71,10 +71,10 @@ function Login() {
             : null}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block  text-sm font-bold mb-2">
             Email
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
+              className="shadow appearance-none border dark:border-none  dark:bg-gray-600 rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline mt-2"
               type="email"
               placeholder="e.g: another@email.dot"
               autoComplete="username"
@@ -85,17 +85,17 @@ function Login() {
           </label>
 
           {errors.email || showErrors.email ? (
-            <p className="text-red-500 italic">
+            <p className="text-red-500 italic dark:text-red-300">
               Something wrong with this email!{" "}
               <span className="not-italic">🤔</span>.
             </p>
           ) : null}
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+        <div className="mb-6">
+          <label className="block text-sm font-bold mb-2">
             Password
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
+              className="shadow appearance-none border dark:border-none  dark:bg-gray-600 rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline mt-2"
               type="password"
               placeholder="current-password"
               autoComplete="current-password"
@@ -105,7 +105,7 @@ function Login() {
             />
           </label>
           {errors.password || showErrors.password ? (
-            <p className="text-red-500 italic">
+            <p className="text-red-500 italic dark:text-red-300">
               Please choose a good password, min 8 characters{" "}
               <span className="not-italic">😁</span>.
             </p>
@@ -123,7 +123,7 @@ function Login() {
           <p>
             Don't you hava an account?{" "}
             <Link
-              className="hover:underline text-blue-600 font-bold"
+              className="hover:underline dark:text-blue-300 text-blue-600 font-bold"
               to="/register"
             >
               Sing up here

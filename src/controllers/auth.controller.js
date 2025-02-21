@@ -54,10 +54,14 @@ export const logout = async (req, res) => {
   return res.sendStatus(200);
 };
 
-export const profile = async (req, res) => {
+export const findUser = async (req, res) => {
+  //const { user } = req.body;
+  //const userFound = await User.findById(user.id);
+
   const userFound = await User.findById(req.user.id);
 
-  if (!userFound) return res.status(400).json({ error: ["user not found"] });
+  if (!userFound)
+    return res.status(404).json({ error: ["User doesn't exist"] });
 
   return res.json(userFound.toJSON());
 };
