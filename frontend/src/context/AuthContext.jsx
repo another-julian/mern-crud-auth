@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [isChekingAuth, setIsChekingAuth] = useState(true);
 
   const signup = async (user) => {
     try {
@@ -44,36 +45,42 @@ export const AuthProvider = ({ children }) => {
   const checkLogin = async () => {
     return new Promise(async (resolve, reject) => {
       const cookies = Cookies.get();
-      console.log(cookies);
+      console.log("checking login");
 
       if (cookies.token) {
-        console.log(cookies.token);
         try {
           const res = await verifyTokenRequest(cookies.token);
-          console.log(res);
 
           if (!res.data) {
-            setIsAuth(false);
-            setUser(res.data);
             resolve(false);
           } else {
-            setIsAuth(true);
-            setUser(null);
             resolve(true);
           }
         } catch (error) {
-          setIsAuth(false);
-          setUser(null);
           reject(error);
         }
       } else {
-        resolve(false); // Si no hay token, devuelve false
+        resolve(false);
       }
     });
   };
+
+  useEffect(() => {
+    checkLogin()
+      .then((isAuthenticated) => {
+        setIsAuth(isAuthenticated);
+        setIsChekingAuth(false);
+      })
+      .catch((error) => {
+        console.error("Error en la autenticación:", error);
+        setIsAuth(false);
+        setIsChekingAuth(false);
+      });
+  }, []);
+
   return (
     <AuthContext.Provider
-      value={{ user, signup, login, checkLogin, isAuth, errors }}
+      value={{ user, signup, login, checkLogin, isAuth, errors, isChekingAuth }}
     >
       {children}
     </AuthContext.Provider>

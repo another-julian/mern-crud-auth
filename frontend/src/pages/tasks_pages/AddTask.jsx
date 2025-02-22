@@ -1,5 +1,7 @@
+import Form from "../../components/Form";
+
 function AddTask() {
-  return <h2>Add Task Form Page</h2>;
+  return <Form />;
 }
 
 export default AddTask;

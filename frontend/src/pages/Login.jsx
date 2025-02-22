@@ -123,7 +123,7 @@ function Login() {
           <p>
             Don't you hava an account?{" "}
             <Link
-              className="hover:underline dark:text-blue-300 text-blue-600 font-bold"
+              className="hover:underline dark:text-bl text-blue-600 font-bold"
               to="/register"
             >
               Sing up here
