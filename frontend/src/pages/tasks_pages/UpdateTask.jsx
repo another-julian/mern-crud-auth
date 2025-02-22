@@ -1,5 +1,7 @@
+import Form from "../../components/Form";
+
 function UpdateTask() {
-  return <h2>Update task page</h2>;
+  return <Form />;
 }
 
 export default UpdateTask;

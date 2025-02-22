@@ -11,6 +11,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Profile from "./pages/Profile";
 
 function App() {
+  const taskRoute = "/tasks";
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -19,10 +20,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/tasks" element={<Tasks />} />
-            <Route path="/tasks/:id" element={<Task />} />
-            <Route path="/add-task" element={<AddTask />} />
-            <Route path="/update-task/:id" element={<UpdateTask />} />
+            <Route path={taskRoute} element={<Tasks />} />
+            <Route path={`${taskRoute}/:id`} element={<Task />} />
+            <Route path={`${taskRoute}/add`} element={<AddTask />} />
+            <Route path={`/tasks/update/:id`} element={<UpdateTask />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>

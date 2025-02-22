@@ -1,13 +1,44 @@
 import { useForm } from "react-hook-form";
-import { createTask } from "../services/tasksService";
+import { createTask, getTask, updateTask } from "../services/tasksService";
+import { useParams } from "react-router";
+import { useEffect } from "react";
 
 export default function Form() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
+  const params = useParams();
+
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    createTask(data);
+    if (params.id) {
+      console.log(data);
+
+      updateTask({ ...data, _id: params.id })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      console.log(data);
+      createTask(data);
+    }
   });
 
+  useEffect(() => {
+    console.log(params);
+    if (params.id) {
+      console.log("Obteniendo task");
+      getTask(params.id)
+        .then((task) => {
+          console.log("task obtenida:", task);
+          setValue("title", task.title);
+          setValue("description", task.description);
+        })
+        .catch((error) => {
+          console.log("Error en getTask:", error);
+        });
+    }
+  }, []);
   return (
     <div className="w-full max-w-96">
       <h2 className="mb-10 text-[1.5rem] text-center font-bold">Task</h2>
