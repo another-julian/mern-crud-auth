@@ -5,7 +5,7 @@
   --font-inter: "Inter", serif;
   --color-primary: #595143;
   --color-secondary: #8a8c80;
-  --color-light: #d6d9d2;
+  --color-light: #e8ebe4;
   --color-dark: #000a0d;
   --color-danger: #a65d5d;
 }
@@ -13,7 +13,6 @@
 div#root {
   height: 100vh;
   width: 100%;
-  display: flex;
   align-items: center;
   justify-content: center;
 }

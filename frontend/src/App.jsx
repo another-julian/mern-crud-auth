@@ -9,12 +9,13 @@ import UpdateTask from "./pages/tasks_pages/UpdateTask";
 import Task from "./pages/tasks_pages/Task";
 import ProtectedRoute from "./ProtectedRoute";
 import Profile from "./pages/Profile";
-
+import Navbar from "./components/Navbar";
 function App() {
   const taskRoute = "/tasks";
   return (
     <AuthProvider>
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
